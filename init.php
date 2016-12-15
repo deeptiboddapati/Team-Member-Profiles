@@ -11,7 +11,7 @@ Author: Deepti Boddapati
 Version: 1.0
 Author URI: http://www.deeptiboddapati.com
 */
-add_action( 'admin_enqueue_scripts', 'DB_staff_admin_scripts_and_styles', 999 );
+// add_action( 'admin_enqueue_scripts', 'DB_staff_admin_scripts_and_styles', 999 );
 function DB_staff_admin_scripts_and_styles(){
 
  wp_enqueue_style(
@@ -112,7 +112,7 @@ function cmb2_sample_metaboxes() {
         'type' => 'text_url',
         'protocols' => array('http', 'https'), // Array of allowed protocols
         'repeatable' => false,
-        // 'sanitization_cb' => 'esc_url'
+        'sanitization_cb' => 'sanitize_facebook_url'
     ) );
         // URL text field
     $cmb->add_field( array(
@@ -129,7 +129,29 @@ function cmb2_sample_metaboxes() {
 
 }
 
-add_filter( 'clean_url', 'DB_checking_esc_url',10,  3 );
+function sanitize_facebook_url($value, $field_args, $field){
+    
+    if(preg_match("/facebook.com/i", $value)){
+        return $value;
+    }
+    else{
+        return '';
+    }
+    
+}
+
+// function sanitize_facebook_url($value, $field_args, $field){
+    
+//     if(preg_match("/facebook.com/i", $value)){
+//         return $value;
+//     }
+//     else{
+//         return '';
+//     }
+    
+// }
+
+// add_filter( 'clean_url', 'DB_checking_esc_url',10,  3 );
 
 function DB_checking_esc_url($good_protocol_url, $original_url, $_context){
     error_log( print_r( $original_url , true ) );
