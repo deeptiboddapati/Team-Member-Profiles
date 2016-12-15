@@ -96,7 +96,6 @@ function cmb2_sample_metaboxes() {
         'desc'       => __( 'field description (optional)', 'cmb2' ),
         'id'         => $prefix . 'text',
         'type'       => 'text',
-
         'sanitization_cb' => 'sanitize_text_field', // custom sanitization callback parameter
         // 'escape_cb'       => 'my_custom_escaping',  // custom escaping callback parameter
         // 'on_front'        => false, // Optionally designate a field to wp-admin only
@@ -104,8 +103,8 @@ function cmb2_sample_metaboxes() {
     ) );
 
     // URL text field
-    //sanitization- cmb automatically passes entries in a url field to esc_url
-    //even if you define your own sanitization cb.
+    //escape_cb- cmb automatically passes entries in a url field to esc_url
+    //sanitization cb- cmb automatically passes entries to esc url if no other sanitization cb is added
     $cmb->add_field( array(
         'name' => __( 'Website URL', 'cmb2' ),
         'desc' => __( 'field description (optional)', 'cmb2' ),
@@ -131,23 +130,19 @@ function cmb2_sample_metaboxes() {
 }
 
 function DB_sanitize_social_media_url($value, $field_args, $field){
+    
     if($field_args['id'] == '_DB_stafftwitter_url'){
-        if(preg_match("/twitter.com/i", $value)){
-            return $value;
-        }
-        else{
+        if(!preg_match("/twitter.com/i", $value)){
             return '';
-        }
+        }   
     }
     else{
-        if(preg_match("/facebook.com/i", $value)){
-        return $value;
+        if(!preg_match("/facebook.com/i", $value)){
+        return '';
     }
-        else{
-            return '';
-        }
     }
    
+    return esc_url($value, array('http', 'https'));
     
 }
 
