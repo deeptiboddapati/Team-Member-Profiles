@@ -105,6 +105,7 @@ function cmb2_sample_metaboxes() {
 
     // URL text field
     //sanitization- cmb automatically passes entries in a url field to esc_url
+    //even if you define your own sanitization cb.
     $cmb->add_field( array(
         'name' => __( 'Website URL', 'cmb2' ),
         'desc' => __( 'field description (optional)', 'cmb2' ),
@@ -112,7 +113,7 @@ function cmb2_sample_metaboxes() {
         'type' => 'text_url',
         'protocols' => array('http', 'https'), // Array of allowed protocols
         'repeatable' => false,
-        'sanitization_cb' => 'sanitize_facebook_url'
+        'sanitization_cb' => 'DB_sanitize_social_media_url'
     ) );
         // URL text field
     $cmb->add_field( array(
@@ -122,34 +123,33 @@ function cmb2_sample_metaboxes() {
         'type' => 'text_url',
         'protocols' => array('http', 'https'), // Array of allowed protocols
         'repeatable' => false,
-        // 'sanitization_cb' => 'esc_url'
+        'sanitization_cb' => 'DB_sanitize_social_media_url'
 
     ) );
     
 
 }
 
-function sanitize_facebook_url($value, $field_args, $field){
-    
-    if(preg_match("/facebook.com/i", $value)){
-        return $value;
+function DB_sanitize_social_media_url($value, $field_args, $field){
+    if($field_args['id'] == '_DB_stafftwitter_url'){
+        if(preg_match("/twitter.com/i", $value)){
+            return $value;
+        }
+        else{
+            return '';
+        }
     }
     else{
-        return '';
+        if(preg_match("/facebook.com/i", $value)){
+        return $value;
     }
+        else{
+            return '';
+        }
+    }
+   
     
 }
-
-// function sanitize_facebook_url($value, $field_args, $field){
-    
-//     if(preg_match("/facebook.com/i", $value)){
-//         return $value;
-//     }
-//     else{
-//         return '';
-//     }
-    
-// }
 
 // add_filter( 'clean_url', 'DB_checking_esc_url',10,  3 );
 
