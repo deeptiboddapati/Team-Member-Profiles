@@ -89,7 +89,7 @@ function DB_init_team_member_cpt() {
         'show_in_admin_bar'     => true,
         'show_in_nav_menus'     => true,
         'can_export'            => true,
-        'has_archive'           => 'team',
+        'has_archive'           => true,
         'exclude_from_search'   => false,
         'publicly_queryable'    => true,
         'capability_type'       => 'page',
@@ -204,6 +204,19 @@ function team_member_query(){
         'posts_per_page' =>12
         );
      $query = new $WP_query($args);
+     return $query;
+
+
+function DB_custom_team_profile_archive( $query ){
+    if ( is_post_type_archive( 'team_member' ) && !is_admin()) {
+         $query->query_vars['posts_per_page'] = 12;
+         $query->query_vars['orderby'] = 'title';
+         $query->query_vars['order'] = 'DESC';
+         // $query->query_vars['nopaging'] = true;  
+         // add_filter( 'wp_link_pages', function(){ return '';} );  
+    }
 }
+add_action( 'pre_get_posts', 'DB_custom_team_profile_archive' );
+
 
 ?>
