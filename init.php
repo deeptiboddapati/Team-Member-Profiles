@@ -16,7 +16,7 @@ add_action( 'admin_enqueue_scripts', 'DB_staff_admin_scripts_and_styles', 999 );
 function DB_staff_admin_scripts_and_styles(){
 
    wp_enqueue_style(
-    'mod-admin',
+    'DB-admin',
     plugin_dir_url( __FILE__ ) . 'style.css'
     );
 
@@ -30,7 +30,7 @@ function DB_staff_admin_scripts_and_styles(){
     );
 
    wp_enqueue_script(
-    'mod-admin',
+    'DB-admin',
     plugin_dir_url( __FILE__ ) . 'admin.js',
     ['jquery-validate'],
     null,
@@ -144,7 +144,7 @@ add_action( 'init', 'DB_init_department_taxonomy', 0 );
 
 }
 
-add_filter( 'enter_title_here', 'DB_change_title_text' );
+
 function DB_change_title_text( $title ){
      $screen = get_current_screen();
  
@@ -154,7 +154,8 @@ function DB_change_title_text( $title ){
  
      return $title;
 }
- 
+
+add_filter( 'enter_title_here', 'DB_change_title_text' );
 
 function DB_sanitize_social_media_url($value, $field_args, $field){
 
