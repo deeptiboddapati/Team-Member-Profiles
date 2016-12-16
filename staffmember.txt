@@ -1,0 +1,13 @@
+wp post meta add 36   _DB_staffposition Director
+wp post meta add 35   _DB_staffposition Director
+wp post meta add 34   _DB_staffposition Director
+wp post meta add 33   _DB_staffposition Director
+wp post meta add 32   _DB_staffposition Director
+wp post meta add 31   _DB_staffposition Director
+wp post meta add 30   _DB_staffposition Director
+wp post meta add 29   _DB_staffposition Director
+wp post meta add 28   _DB_staffposition Director
+wp post meta add 27   _DB_staffposition Director
+wp post meta add 26   _DB_staffposition Director
+wp post meta add 25   _DB_staffposition Director
+wp post meta add 10   _DB_staffposition Director

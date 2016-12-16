@@ -1,3 +1,22 @@
+TODO 
+
+Custom template 3X4 rows
+
+JS show/hide toggle behavior for description.
+
+Name (post title)
+Photo (featured image)
+Position (post meta)
+Twitter link (custom post meta)
+Facebook link (custom post meta)
+Bio (post content)
+
+internationalize text strings
+
+
+DONE
+
+
 Registers a custom post type named "Team Member". This CPT should support title, content, and featured image.
 
 cpt- "Team Member"
@@ -15,17 +34,5 @@ sanitize values before storing in database
 
 escape these values before output on front-end 
 
-Custom template 3X4 rows
-
-JS show/hide toggle behavior for description.
 
 Display the posts, sorted alphabetically.
-
-Name (post title)
-Photo (featured image)
-Position (post meta)
-Twitter link (custom post meta)
-Facebook link (custom post meta)
-Bio (post content)
-
-internationalize text strings
