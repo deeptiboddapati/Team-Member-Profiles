@@ -39,95 +39,122 @@ function DB_staff_admin_scripts_and_styles(){
 
 
 }
-add_action( 'init', 'staffcpt' );
-function staffcpt(){
-    $labels= array('name' => 'Team Member');
-    $args = array(
-       'labels' => $labels,
-       'supports' => array( 'title', 'editor', 'thumbnail' ),
-       'show_ui'  => true,
-       'show_in_menu' => true,
-       'query_var'          => true,
-       'public' => true
-       );
 
-    register_post_type('staff', $args);
+if ( ! function_exists('DB_init_team_member_cpt') ) {
+
+
+function DB_init_team_member_cpt() {
 
     $labels = array(
-       'name'                       => 'Department'
-       );
-
+        'name'                  => _x( 'Team Members', 'Post Type General Name', 'DB_Team' ),
+        'singular_name'         => _x( 'Team Member', 'Post Type Singular Name', 'DB_Team' ),
+        'menu_name'             => __( 'Team Member Profiles', 'DB_Team' ),
+        'name_admin_bar'        => __( 'Team Member Profile', 'DB_Team' ),
+        'archives'              => __( 'Team Member Profile Archives', 'DB_Team' ),
+        'attributes'            => __( 'Team Member Profile Attributes', 'DB_Team' ),
+        'parent_item_colon'     => __( 'Parent Team Member Profile:', 'DB_Team' ),
+        'all_items'             => __( 'All Team Member Profiles', 'DB_Team' ),
+        'add_new_item'          => __( 'Add New Team Member Profile', 'DB_Team' ),
+        'add_new'               => __( 'Add New Team Member Profile', 'DB_Team' ),
+        'new_item'              => __( 'New Team Member Profile', 'DB_Team' ),
+        'edit_item'             => __( 'Edit Team Member Profile', 'DB_Team' ),
+        'update_item'           => __( 'Update Team Member Profile', 'DB_Team' ),
+        'view_item'             => __( 'View Team Member Profile', 'DB_Team' ),
+        'view_items'            => __( 'View Team Member Profiles', 'DB_Team' ),
+        'search_items'          => __( 'Search Team Member Profiles', 'DB_Team' ),
+        'not_found'             => __( 'Team Member Profile Not found', 'DB_Team' ),
+        'not_found_in_trash'    => __( 'Team Member Profile Not found in Trash', 'DB_Team' ),
+        'featured_image'        => __( 'Team Member Profile Image', 'DB_Team' ),
+        'set_featured_image'    => __( 'Set Team Member Profile image', 'DB_Team' ),
+        'remove_featured_image' => __( 'Remove Team Member Profile image', 'DB_Team' ),
+        'use_featured_image'    => __( 'Use as Team Member Profile image', 'DB_Team' ),
+        'insert_into_item'      => __( 'Insert into Team Member Profile', 'DB_Team' ),
+        'uploaded_to_this_item' => __( 'Uploaded to this Team Member Profile', 'DB_Team' ),
+        'items_list'            => __( 'Team Member Profiles list', 'DB_Team' ),
+        'items_list_navigation' => __( 'Team Member Profiles list navigation', 'DB_Team' ),
+        'filter_items_list'     => __( 'Filter Team Member Profiles list', 'DB_Team' ),
+    );
     $args = array(
-       'hierarchical'          => false,
-       'labels'                => $labels,
-       'show_ui'               => true,
-       'show_admin_column'     => true,
-       'update_count_callback' => '_update_post_term_count',
-       'query_var'             => true,
-       'rewrite'               => array( 'slug' => 'department' ),
-       );
-
-
-    register_taxonomy('department','staff',$args);
-}
-add_action( 'cmb2_admin_init', 'cmb2_sample_metaboxes' );
-/**
- * Define the metabox and field configurations.
- */
-function cmb2_sample_metaboxes() {
-
-    // Start with an underscore to hide fields from custom fields list
-    $prefix = '_DB_staff';
-
-    /**
-     * Initiate the metabox
-     */
-    $cmb = new_cmb2_box( array(
-        'id'            => 'staff_details',
-        'title'         => __( 'Team Member Details', 'cmb2' ),
-        'object_types'  => array( 'staff', ), // Post type
-        'context'       => 'normal',
-        'priority'      => 'high',
-        'show_names'    => true, // Show field names on the left
-        // 'cmb_styles' => false, // false to disable the CMB stylesheet
-        // 'closed'     => true, // Keep the metabox closed by default
-        ) );
-
-   // Regular text field
-    $cmb->add_field( array(
-        'name'       => __( 'Position', 'cmb2' ),    
-        'id'         => $prefix . 'position',
-        'type'       => 'text',
-        'sanitization_cb' => 'sanitize_text_field', // custom sanitization callback parameter
-        'escape_cb'       => 'sanitize_text_field',  // custom escaping callback parameter
-        // 'on_front'        => false, // Optionally designate a field to wp-admin only
-        // 'repeatable'      => true,
-        ) );
-
-    // URL text field
-    //escape_cb- cmb automatically passes entries in a url field to esc_url this is sufficent for displaying urls
-    //sanitization cb- cmb automatically passes entries to esc url if no other sanitization cb is added
-    $cmb->add_field( array(
-        'name' => __( 'Twitter Profile URL', 'cmb2' ),
-        'id'   => $prefix . 'twitter_url',
-        'type' => 'text_url',
-        'protocols' => array('http', 'https'), // Array of allowed protocols
-        'repeatable' => false,
-        'sanitization_cb' => 'DB_sanitize_social_media_url'
-        ) );
-        // URL text field
-    $cmb->add_field( array(
-        'name' => __( 'FaceBook Profile URL', 'cmb2' ),
-        'id'   => $prefix . 'facebook_url',
-        'type' => 'text_url',
-        'protocols' => array('http', 'https'), // Array of allowed protocols
-        'repeatable' => false,
-        'sanitization_cb' => 'DB_sanitize_social_media_url'
-
-        ) );
-    
+        'label'                 => __( 'Team Member', 'DB_Team' ),
+        'description'           => __( 'Team Member Profiles', 'DB_Team' ),
+        'labels'                => $labels,
+        'supports'              => array( 'title', 'editor', 'thumbnail', ),
+        'taxonomies'            => array( 'department' ),
+        'hierarchical'          => false,
+        'public'                => true,
+        'show_ui'               => true,
+        'show_in_menu'          => true,
+        'menu_position'         => 5,
+        'menu_icon'             => 'dashicons-businessman',
+        'show_in_admin_bar'     => true,
+        'show_in_nav_menus'     => true,
+        'can_export'            => true,
+        'has_archive'           => 'team',
+        'exclude_from_search'   => false,
+        'publicly_queryable'    => true,
+        'capability_type'       => 'page',
+    );
+    register_post_type( 'team_member', $args );
 
 }
+add_action( 'init', 'DB_init_team_member_cpt', 0 );
+
+}
+
+if ( ! function_exists( 'DB_init_department_taxonomy' ) ) {
+
+// Register Custom Taxonomy
+function DB_init_department_taxonomy() {
+
+    $labels = array(
+        'name'                       => _x( 'Departments', 'Taxonomy General Name', 'DB_Team' ),
+        'singular_name'              => _x( 'Department', 'Taxonomy Singular Name', 'DB_Team' ),
+        'menu_name'                  => __( 'Department', 'DB_Team' ),
+        'all_items'                  => __( 'All Departments', 'DB_Team' ),
+        'parent_item'                => __( 'Parent Department', 'DB_Team' ),
+        'parent_item_colon'          => __( 'Parent Department:', 'DB_Team' ),
+        'new_item_name'              => __( 'New Department Name', 'DB_Team' ),
+        'add_new_item'               => __( 'Add Department Item', 'DB_Team' ),
+        'edit_item'                  => __( 'Edit Department', 'DB_Team' ),
+        'update_item'                => __( 'Update Department', 'DB_Team' ),
+        'view_item'                  => __( 'View Department', 'DB_Team' ),
+        'separate_items_with_commas' => __( 'Separate Departments with commas', 'DB_Team' ),
+        'add_or_remove_items'        => __( 'Add or remove Departments', 'DB_Team' ),
+        'choose_from_most_used'      => __( 'Choose from the most used departments', 'DB_Team' ),
+        'popular_items'              => __( 'Popular Departments', 'DB_Team' ),
+        'search_items'               => __( 'Search Departments', 'DB_Team' ),
+        'not_found'                  => __( 'Department Not Found', 'DB_Team' ),
+        'no_terms'                   => __( 'No Departments', 'DB_Team' ),
+        'items_list'                 => __( 'Departments list', 'DB_Team' ),
+        'items_list_navigation'      => __( 'Departments list navigation', 'DB_Team' ),
+    );
+    $args = array(
+        'labels'                     => $labels,
+        'hierarchical'               => false,
+        'public'                     => true,
+        'show_ui'                    => true,
+        'show_admin_column'          => true,
+        'show_in_nav_menus'          => true,
+        'show_tagcloud'              => false,
+    );
+    register_taxonomy( 'department', array( 'team_member' ), $args );
+
+}
+add_action( 'init', 'DB_init_department_taxonomy', 0 );
+
+}
+
+add_filter( 'enter_title_here', 'DB_change_title_text' );
+function DB_change_title_text( $title ){
+     $screen = get_current_screen();
+ 
+     if  ( 'team_member' == $screen->post_type ) {
+          $title = 'Enter Team Member Name';
+     }
+ 
+     return $title;
+}
+ 
 
 function DB_sanitize_social_media_url($value, $field_args, $field){
 
@@ -168,9 +195,9 @@ function DB_check_sanitize_text_field_ran( $safe_text, $text){
     return $safe_text;
 }
 
-function staff_query(){
+function team_member_query(){
      $args = array(
-        'post_type' => 'staff', 
+        'post_type' => 'team_member', 
         'orderby' => 'title', 
         'order' => 'DESC',
         'posts_per_page' =>12
