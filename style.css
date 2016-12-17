@@ -1,0 +1,25 @@
+#team{
+	display: flex;
+	flex-flow:row wrap;
+}
+
+.member{
+	flex: 1 1 30%;
+}
+.position{
+	display: block;
+	text-align: center;
+}
+
+.name{
+	display:block;
+	text-align: center;
+}
+
+.member img.attachment-thumbnail{
+	display: block;
+	margin: 0 auto;
+}
+ .member{
+	text-align: center;
+}

@@ -39,6 +39,9 @@ function DB_staff_admin_scripts_and_styles(){
 
 
 }
+add_action( 'wp_enqueue_scripts', 'DB_staff_admin_scripts_and_styles', 999 );
+
+
 
 if ( ! function_exists('DB_init_team_member_cpt') ) {
 
@@ -218,7 +221,64 @@ function DB_custom_team_profile_archive( $query ){
 }
 add_action( 'pre_get_posts', 'DB_custom_team_profile_archive' );
 
+add_action( 'cmb2_admin_init', 'cmb2_sample_metaboxes' );
+/**
+ * Define the metabox and field configurations.
+ */
+function cmb2_sample_metaboxes() {
 
+    // Start with an underscore to hide fields from custom fields list
+    $prefix = '_DB_staff';
+
+    /**
+     * Initiate the metabox
+     */
+    $cmb = new_cmb2_box( array(
+        'id'            => 'staff_details',
+        'title'         => __( 'Team Member Details', 'cmb2' ),
+        'object_types'  => array( 'team_member', ), // Post type
+        'context'       => 'normal',
+        'priority'      => 'high',
+        'show_names'    => true, // Show field names on the left
+        // 'cmb_styles' => false, // false to disable the CMB stylesheet
+        // 'closed'     => true, // Keep the metabox closed by default
+        ) );
+
+   // Regular text field
+    $cmb->add_field( array(
+        'name'       => __( 'Position', 'cmb2' ),    
+        'id'         => $prefix . 'position',
+        'type'       => 'text',
+        'sanitization_cb' => 'sanitize_text_field', // custom sanitization callback parameter
+        'escape_cb'       => 'sanitize_text_field',  // custom escaping callback parameter
+        // 'on_front'        => false, // Optionally designate a field to wp-admin only
+        // 'repeatable'      => true,
+        ) );
+
+    // URL text field
+    //escape_cb- cmb automatically passes entries in a url field to esc_url this is sufficent for displaying urls
+    //sanitization cb- cmb automatically passes entries to esc url if no other sanitization cb is added
+    $cmb->add_field( array(
+        'name' => __( 'Twitter Profile URL', 'cmb2' ),
+        'id'   => $prefix . 'twitter_url',
+        'type' => 'text_url',
+        'protocols' => array('http', 'https'), // Array of allowed protocols
+        'repeatable' => false,
+        'sanitization_cb' => 'DB_sanitize_social_media_url'
+        ) );
+        // URL text field
+    $cmb->add_field( array(
+        'name' => __( 'FaceBook Profile URL', 'cmb2' ),
+        'id'   => $prefix . 'facebook_url',
+        'type' => 'text_url',
+        'protocols' => array('http', 'https'), // Array of allowed protocols
+        'repeatable' => false,
+        'sanitization_cb' => 'DB_sanitize_social_media_url'
+
+        ) );
+    
+
+}
 
 
  
