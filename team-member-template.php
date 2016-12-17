@@ -23,9 +23,12 @@ Bio (post content)
 			<a href='<?php echo $post_meta['_DB_stafftwitter_url'][0]; ?>'>
 			<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAq1BMVEUAAAAsst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst10n3wPAAAAOHRSTlMAAQIDBAUKDBAVHB4hKy0uOkFCQ0VGSk1PVFVZXWNkZoKSlZeYmpujrbW3vsPO0dfc3uDo7fX7/fqSCz0AAACNSURBVBgZncHZAoFAAAXQO1GRLUv2LWsRyXr//8tMM0SPnIO/CG+zagoUDcDxoBl7SqG/BjBgH8qMymVYBXpkYENKqI0BlCht65a4UjlDMkbMiSB1jnd+8yFZD+Z0kXKZYyMl3BM/Amghv5ShmTtmJsg4MbUl3gqNiNpcQBGtmC+HGjJmexHfknBawe+eUnMmRdtDuZoAAAAASUVORK5CYII=" alt="twitter icon">
 			</a>
-			<p class='description'>
+			<button class='readmore'> READ MORE </button>
+			<div class='description'>
 				<?php the_content(); ?>
-			</p>
+			<button class='readless'> READ LESS </button>
+
+			</div>
 			<?php
 			
 			
