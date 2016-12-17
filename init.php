@@ -205,18 +205,40 @@ function team_member_query(){
         );
      $query = new $WP_query($args);
      return $query;
-
+}
 
 function DB_custom_team_profile_archive( $query ){
     if ( is_post_type_archive( 'team_member' ) && !is_admin()) {
          $query->query_vars['posts_per_page'] = 12;
          $query->query_vars['orderby'] = 'title';
          $query->query_vars['order'] = 'DESC';
-         // $query->query_vars['nopaging'] = true;  
-         // add_filter( 'wp_link_pages', function(){ return '';} );  
+         $query->query_vars['nopaging'] = true;  
+         add_filter( 'archive_template', 'Plugin_page_template', 99 );
     }
 }
 add_action( 'pre_get_posts', 'DB_custom_team_profile_archive' );
+
+
+
+
+ 
+function Plugin_page_template( $page_template_path ) {
+ 
+    if ( is_post_type_archive( 'team_member' ) && !is_admin()  ) {
+        // $plugin_path = plugin_dir_path( string $file );
+        // $page_template_path = plugin_dir_path("staffplugin/team-member-template.php");
+        print_r(plugin_dir_path(__FILE__).'team-member-template.php', false);
+        $page_template_path = plugin_dir_path(__FILE__).'team-member-template.php';
+        echo "is archive";
+     
+        // if ( '' != $page_template_path ) {
+ 
+        //     return $page_template_path ;
+        // }
+    }
+ 
+    return $page_template_path;
+}
 
 
 ?>
