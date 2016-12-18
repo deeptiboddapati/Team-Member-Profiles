@@ -197,36 +197,40 @@ function DB_custom_team_profile_archive( $query ){
 	   $query->query_vars['posts_per_page'] = 12;
 	   $query->query_vars['orderby'] = 'title';
 	   $query->query_vars['order'] = 'DESC';
-	   $query->query_vars['nopaging'] = true;  
+	   $query->query_vars['nopaging'] = true; 
+       
+       //comment if overriding theme template with custom template 
 	   DB_add_content_filters();
+       //uncomment to override theme template with custom template
+       // add_filter( 'archive_template', 'DB_staff_page_template', 99 );
 
    }
 }
 
 function DB_add_content_filters(){
-	add_filter( 'the_content', 'member_profile', 10, 1 );
+	add_filter( 'the_content', 'DB_member_profile', 10, 1 );
 	add_filter( 'the_title', 'DB_return_none', 10, 1 );
 	add_filter( 'post_thumbnail_html', 'DB_return_none', 10, 2 );
 }
 function DB_remove_content_filters(){
-	remove_filter( 'the_content', 'member_profile', 10);
+	remove_filter( 'the_content', 'DB_member_profile', 10);
 	remove_filter( 'the_title', 'DB_return_none', 10);
 	remove_filter( 'post_thumbnail_html', 'DB_return_none', 10);
 }
 
-function member_profile($value){
+function DB_member_profile($value){
 	DB_remove_content_filters();
 	global $post;
 	$post_meta = get_post_meta($post->ID);
 	the_post_thumbnail('thumbnail');
 	?>
 	<h2 class='name'> <?php echo get_the_title(); ?></h2>
-	<span class='position'><?php  echo $post_meta['_DB_staffposition'][0]; ?> </span>
+	<span class='position'><?php  echo $post_meta['_DB_staff_position'][0]; ?> </span>
 	<div class='socialmedia'>
-		<a href='<?php echo $post_meta['_DB_stafffacebook_url'][0]; ?>' target='_blank'>
+		<a href='<?php echo $post_meta['_DB_staff_facebook_url'][0]; ?>' target='_blank'>
 			<img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAS1BMVEUAAAAsbd0sbd0sbd0sbd0sbd0sbd0sbd0sbd0sbd0sbd0sbd0sbd0sbd0sbd0sbd0sbd0sbd0sbd0sbd0sbd0sbd0sbd0sbd0sbd3q/KZNAAAAGHRSTlMAAwQLDg8TISQ4VmJkdZqo0dPX4Obz+ftchJvYAAAAU0lEQVQYlcXNuxJAMBRF0RuvuATx3v//pRpMYlIYjd2d1RyRM9P6bZ2MhGUjAFmEjgR6mOuyiEx2cPIMaF4gV0sKhxR2Aaoq0KtWn95/R2ttfo8DCNUIykx8A1UAAAAASUVORK5CYII='>
 		</a>
-		<a href='<?php echo $post_meta['_DB_stafftwitter_url'][0]; ?>'>
+		<a href='<?php echo $post_meta['_DB_staff_twitter_url'][0]; ?>'>
 			<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAq1BMVEUAAAAsst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst0sst10n3wPAAAAOHRSTlMAAQIDBAUKDBAVHB4hKy0uOkFCQ0VGSk1PVFVZXWNkZoKSlZeYmpujrbW3vsPO0dfc3uDo7fX7/fqSCz0AAACNSURBVBgZncHZAoFAAAXQO1GRLUv2LWsRyXr//8tMM0SPnIO/CG+zagoUDcDxoBl7SqG/BjBgH8qMymVYBXpkYENKqI0BlCht65a4UjlDMkbMiSB1jnd+8yFZD+Z0kXKZYyMl3BM/Amghv5ShmTtmJsg4MbUl3gqNiNpcQBGtmC+HGjJmexHfknBawe+eUnMmRdtDuZoAAAAASUVORK5CYII=" alt="twitter icon">
 		</a>
 	</div>
@@ -248,6 +252,15 @@ function DB_return_none($value, $id = null)
 add_action( 'pre_get_posts', 'DB_custom_team_profile_archive' );
 
 add_action( 'cmb2_admin_init', 'DB_staff_plugin_metaboxes' );
+
+function DB_staff_page_template( $page_template_path ) {
+
+    if ( is_post_type_archive( 'team_member' ) && !is_admin()  ) {
+     $page_template_path = plugin_dir_path(__FILE__).'team-member-template.php';
+    }
+ 
+    return $page_template_path;
+}
 
 function DB_staff_plugin_metaboxes() {
 
@@ -297,14 +310,7 @@ function DB_staff_plugin_metaboxes() {
 
 
 
-function DB_staff_page_template( $page_template_path ) {
 
-	if ( is_post_type_archive( 'team_member' ) && !is_admin()  ) {
-	 $page_template_path = plugin_dir_path(__FILE__).'team-member-template.php';
- 	}
- 
- 	return $page_template_path;
-}
 
 
 
