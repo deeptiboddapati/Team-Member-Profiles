@@ -1,12 +1,5 @@
 <?php 
-/*
-Name (post title)
-Photo (featured image)
-Position (post meta)
-Twitter link (custom post meta)
-Facebook link (custom post meta)
-Bio (post content)
-*/
+
 	get_header();
 	if ( have_posts() ) :
 		echo '<div id=\'team\'>';

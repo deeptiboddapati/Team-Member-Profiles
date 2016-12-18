@@ -4,7 +4,6 @@
     $(this).validate();
   });
 
-  //cmb2 validation
   $('.cmb2-wrap').each(function() {
     $(this).closest('form').validate();
 
@@ -13,21 +12,5 @@
         url: true,
       });
     });
-  });
-
-  $('.readmore').click(function(){
-    $(this).slideUp();
-    $(this).next('.description').slideDown('slow', function(){
-    });
-    // $(this).next('.description').addClass('active');
-  });
-  $(document).ready(function(){
-    $('.description').slideUp();
-  })
-
-  $('.readless').click(function(){
-    $(this).parent().slideUp();
-    console.log($(this).parent().prev('.readmore'));
-    $(this).parent().prev('.readmore').slideDown();
   });
 })(jQuery);
