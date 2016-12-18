@@ -1,0 +1,29 @@
+.cmb-row label.error {
+  color: red;
+  font-size: .75em;
+  font-style: italic;
+  margin-left: 1em; }
+
+.cmb-row .error {
+  border-color: red; }
+
+.cmb-row .cmb-row {
+  padding-top: 1rem;
+  padding-bottom: 1rem; }
+  .cmb-row .cmb-row.closed {
+    padding-bottom: 0; }
+
+.cmb-row .cmb-repeatable-grouping {
+  padding-top: 0; }
+
+.cmb-row .cmb-th {
+  text-align: right; }
+
+.cmb-row .cmb2-metabox-description {
+  color: #666; }
+
+.cmb-row .cmb2-upload-button {
+  float: none; }
+
+.cmb-row .regular-text {
+  width: 500px; }

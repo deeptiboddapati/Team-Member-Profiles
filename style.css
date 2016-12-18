@@ -1,0 +1,37 @@
+#main{
+	display: flex;
+	flex-flow:row wrap;
+}
+
+.team_member{
+	flex: 0 1 30%;
+}
+.position{
+	display: block;
+	text-align: center;
+}
+
+.name{
+	display:block;
+	text-align: center;
+}
+
+.team_member img.attachment-thumbnail, .readmore{
+	display: block;
+	margin: 0 auto;
+}
+ .team_member, .socialmedia {
+	text-align: center;
+	margin:1%;
+}
+.team_member .socialmedia a img{
+	display: inline-block;
+}
+
+.team_member img.attachment-thumbnail{
+	width: 100%;
+}
+
+.page-header{
+	flex: 1 0 100%;
+}
