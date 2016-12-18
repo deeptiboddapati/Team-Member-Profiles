@@ -1,10 +1,10 @@
-#team{
+#main{
 	display: flex;
 	flex-flow:row wrap;
 }
 
-.member{
-	flex: 1 1 30%;
+.team_member{
+	flex: 0 1 30%;
 }
 .position{
 	display: block;
@@ -16,10 +16,22 @@
 	text-align: center;
 }
 
-.member img.attachment-thumbnail{
+.team_member img.attachment-thumbnail, .readmore{
 	display: block;
 	margin: 0 auto;
 }
- .member{
+ .team_member, .socialmedia {
 	text-align: center;
+	margin:1%;
+}
+.team_member .socialmedia a img{
+	display: inline-block;
+}
+
+.team_member img.attachment-thumbnail{
+	width: 100%;
+}
+
+.page-header{
+	flex: 1 0 100%;
 }
