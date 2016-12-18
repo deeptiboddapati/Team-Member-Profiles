@@ -7,8 +7,8 @@ Add team members by finding the Team members icon and clicking 'Add new Team Mem
 View the team members archive page to see the team profiles.
 
 ##Recommended themes 
-Twenty Seventeen
-Twenty Sixteen
-Twenty Fifteen
+* Twenty Seventeen
+* Twenty Sixteen
+* Twenty Fifteen
 
 
