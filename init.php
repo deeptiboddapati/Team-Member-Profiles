@@ -251,7 +251,6 @@ function DB_return_none($value, $id = null)
 
 add_action( 'pre_get_posts', 'DB_custom_team_profile_archive' );
 
-add_action( 'cmb2_admin_init', 'DB_staff_plugin_metaboxes' );
 
 function DB_staff_page_template( $page_template_path ) {
 
@@ -262,6 +261,7 @@ function DB_staff_page_template( $page_template_path ) {
     return $page_template_path;
 }
 
+add_action( 'cmb2_admin_init', 'DB_staff_plugin_metaboxes' );
 function DB_staff_plugin_metaboxes() {
 
 	$prefix = '_DB_staff_';
